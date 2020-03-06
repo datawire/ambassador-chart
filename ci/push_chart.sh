@@ -12,6 +12,8 @@ source "$CURR_DIR/common.sh"
 
 # Check for update to version of Chart.yaml
 
+echo $TRAVIS_COMMIT_RANGE
+
 version_changed=$(git diff $TRAVIS_COMMIT_RANGE Chart.yaml | grep +version)
 
 if [ -z $version_changed ]
