@@ -343,3 +343,7 @@ metrics:
     enabled: false
     # interval: 30s
     # scrapeTimeout: 30s
+
+# in-cluster image registry for kale
+registry:
+  create: true
