@@ -66,6 +66,23 @@ rules:
   - apiGroups: [""]
     resources: [ "endpoints" ]
     verbs: ["get", "list", "watch", "create", "update"]
+
+  # extra permissions for kale
+  - apiGroups: [""]
+    resources: [ "services" ]
+    verbs: [ "get", "list", "create", "patch", "delete", "watch" ]
+  - apiGroups: ["apps"]
+    resources: [ "deployments" ]
+    verbs: [ "get", "list", "create", "patch", "delete", "watch" ]
+  - apiGroups: ["batch"]
+    resources: [ "jobs" ]
+    verbs: [ "get", "list", "create", "patch", "delete", "watch" ]
+  - apiGroups: [""]
+    resources: [ "pods" ]
+    verbs: [ "get", "list", "watch" ]
+  - apiGroups: [""]
+    resources: [ "pods/log" ]
+    verbs: [ "get" ]
   {{- end }}
 
   {{- if .Values.rbac.podSecurityPolicies }}

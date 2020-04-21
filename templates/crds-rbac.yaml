@@ -33,6 +33,9 @@ rules:
     - filters.getambassador.io
     - filterpolicies.getambassador.io
     - ratelimits.getambassador.io
+    - projectcontrollers.getambassador.io
+    - projects.getambassador.io
+    - projectrevisions.getambassador.io
     verbs: ["get", "list", "watch", "delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
