@@ -172,6 +172,14 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
               {{- end -}}
+            {{- if .Values.sendStatsdToHostIP}}
+            - name: STATSD_ENABLED
+              value: "true"
+            - name: STATSD_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            {{- end }}
             {{- if .Values.env }}
             {{- range $key,$value := .Values.env }}
             - name: {{ $key | upper | quote}}
