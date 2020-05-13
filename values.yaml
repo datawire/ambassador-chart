@@ -196,6 +196,9 @@ volumeMounts: []
 podLabels:
   {}
 
+serviceLabels:
+  {}
+
 podAnnotations:
   {}
   # prometheus.io/scrape: "true"

@@ -15,6 +15,9 @@ metadata:
     {{- end }}
     app.kubernetes.io/component: ambassador-service
     product: aes
+    {{- if .Values.serviceLabels }}
+      {{- toYaml .Values.serviceLabels | nindent 4 }}
+    {{- end }}
   {{- with .Values.service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
