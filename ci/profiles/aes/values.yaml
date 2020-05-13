@@ -1,0 +1,14 @@
+---
+nameOverride: aes
+deploymentTool: manifest
+namespace:
+  name: ambassador
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - podAffinityTerm:
+          labelSelector:
+            matchLabels:
+              product: aes
+          topologyKey: kubernetes.io/hostname
+        weight: 100

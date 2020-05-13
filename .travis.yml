@@ -33,9 +33,13 @@ after_script:
   - ./ci/provider.sh delete
 
 deploy:
-  provider: script
-  script: bash ./ci/push_chart.sh
-  on:
-    # FIXME: use "branch: master" for publishing only in tags in "master"
-    branch: master
-    #all_branches: true
+  # package and push the chart to the repository
+  - provider: script
+    script: bash ./ci/push_chart.sh
+    on:
+      branch: master
+  # generate the manifest used for installing Ambassador with `kubectl apply -f <manifest-url>`
+  - provider: script
+    script: bash ./ci/push_manifest.sh generate push
+    on:
+      branch: master
