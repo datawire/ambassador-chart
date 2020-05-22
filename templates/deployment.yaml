@@ -185,6 +185,11 @@ spec:
               value: {{ $value | quote}}
             {{- end }}
             {{- end }}
+            {{- if .Values.envRaw }}
+            {{- with .Values.envRaw }}
+                {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /ambassador/v0/check_alive

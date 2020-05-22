@@ -53,6 +53,14 @@ env: {}
   # labels Ambassador with an ID to allow for configuring multiple Ambassadors in a cluster
   # AMBASSADOR_ID: default
 
+# Additional container environment variable in raw YAML format
+# Uncomment or add additional environment variables for the container here.
+envRaw: {}
+  # - name: POD_IP
+  #   valueFrom:
+  #     fieldRef:
+  #       fieldPath: status.podIP
+
 imagePullSecrets: []
 
 securityContext:

@@ -94,6 +94,7 @@ The following tables lists the configurable parameters of the Ambassador chart a
 | `hostNetwork`                      | If `true`, uses the host network, useful for on-premise setups                  | `false`                           |
 | `dnsPolicy`                        | Dns policy, when hostNetwork set to ClusterFirstWithHostNet                     | `ClusterFirst`                    |
 | `env`                              | Any additional environment variables for ambassador pods                        | `{}`                              |
+| `envRaw`                           | Any additional environment variables for ambassador pods in raw yaml format     | `{}`                              |
 | `image.pullPolicy`                 | Ambassador image pull policy                                                    | `IfNotPresent`                    |
 | `image.repository`                 | Ambassador image                                                                | `docker.io/datawire/aes`          |
 | `image.tag`                        | Ambassador image tag                                                            | `1.4.3`                           |
