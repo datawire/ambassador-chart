@@ -1,9 +1,8 @@
-{{ if and .Values.rateLimit.create .Values.enableAES }}
----
-apiVersion: getambassador.io/v2
-kind: RateLimitService
+{{ if .Values.security.podSecurityPolicy }}
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
 metadata:
-  name: {{ include "ambassador.fullname" . }}-ratelimit
+  name: {{ include "ambassador.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: {{ include "ambassador.name" . }}
@@ -15,13 +14,12 @@ metadata:
     {{- else }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     {{- end }}
-    app.kubernetes.io/component: {{ include "ambassador.name" . }}-ratelimit
-    product: aes
+  {{- with .Values.security.podSecurityPolicy.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- with .Values.security.podSecurityPolicy.spec }}
 spec:
-  {{- if .Values.env }}
-  {{- if hasKey .Values.env "AMBASSADOR_ID" }}
-  ambassador_id: {{ .Values.env.AMBASSADOR_ID | quote }}
-  {{- end }}
-  {{- end }}
-  service: 127.0.0.1:8500
+  {{- toYaml . | nindent 2}}
+{{- end }}
 {{ end }}

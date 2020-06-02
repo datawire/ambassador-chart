@@ -3,6 +3,35 @@
 This file documents all notable changes to Ambassador Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v6.4.1
+
+- BugFix: The `PodSecurityPolicy` should not be created by default since it is a cluster-wide resource that should only be created once. 
+
+If you would like to use the default `PodSecurityPolicy`, make sure to unset `security.podSecurityPolicy` it in all other releases.
+
+## v6.4.0
+
+- Upgrade Ambassador to version 1.5.0: [CHANGELOG}](https://github.com/datawire/ambassador/blob/master/CHANGELOG.md)
+- AuthService and RateLimitService are now installed in the same namespace as Ambassador.
+- Changes RBAC permissions to better support single-namespace installations and detecting getambassador.io CRDs.
+- Add option to install Service Preview components (traffic-manager, traffic-agent).
+- Add option to install ambassador-injector, alongside Service Preview.
+- Add additional security policy configurations.
+
+   `securityContext` has been deprecated in favor of `security` which allows you to set container and pod security contexts as well as a default `PodSecurityPolicy`.
+
+## v6.3.6
+
+- Switch from Quay.io to DockerHub
+
+## v6.3.5
+
+- Upgrade Ambassador to version 1.4.3: [CHANGELOG}](https://github.com/datawire/ambassador/blob/master/CHANGELOG.md)
+
+## v6.3.4
+
+- Minor bug fixes
+
 ## v6.3.3
 
 - Add extra labels to ServiceMonitor: [CHANGELOG}](https://github.com/datawire/ambassador/blob/master/CHANGELOG.md)

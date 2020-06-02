@@ -70,7 +70,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Changelog
 
-Notable chart changes are listed in the [CHANGELOG](https://github.com/helm/charts/blob/master/stable/ambassador/CHANGELOG.md)
+Notable chart changes are listed in the [CHANGELOG](https://github.com/datawire/ambassador-chart/CHANGELOG.md)
 
 ## Configuration
 
@@ -95,8 +95,8 @@ The following tables lists the configurable parameters of the Ambassador chart a
 | `dnsPolicy`                        | Dns policy, when hostNetwork set to ClusterFirstWithHostNet                     | `ClusterFirst`                    |
 | `env`                              | Any additional environment variables for ambassador pods                        | `{}`                              |
 | `image.pullPolicy`                 | Ambassador image pull policy                                                    | `IfNotPresent`                    |
-| `image.repository`                 | Ambassador image                                                                | `quay.io/datawire/aes`            |
-| `image.tag`                        | Ambassador image tag                                                            | `1.4.2`                           |
+| `image.repository`                 | Ambassador image                                                                | `docker.io/datawire/aes`          |
+| `image.tag`                        | Ambassador image tag                                                            | `1.5.0`                           |
 | `imagePullSecrets`                 | Image pull secrets                                                              | `[]`                              |
 | `namespace.name`                   | Set the `AMBASSADOR_NAMESPACE` environment variable                             | `metadata.namespace`              |
 | `scope.singleNamespace`            | Set the `AMBASSADOR_SINGLE_NAMESPACE` environment variable and create namespaced RBAC if `rbac.enabled: true` | `false`|
@@ -110,8 +110,11 @@ The following tables lists the configurable parameters of the Ambassador chart a
 | `rbac.podSecurityPolicies`         | pod security polices to bind to                                                 |                                   |
 | `rbac.nameOverride`                | Overrides the default name of the RBAC resources                                | ``                                |
 | `replicaCount`                     | Number of Ambassador replicas                                                   | `3`                               |
-| `resources`                        | CPU/memory resource requests/limits                                             | `{}`                              |
+| `resources`                        | CPU/memory resource requests/limits                                             | `{ "limits":{"cpu":"1000m","memory":"600Mi"},"requests":{"cpu":"200m","memory":"300Mi"}}` |
 | `securityContext`                  | Set security context for pod                                                    | `{ "runAsUser": "8888" }`         |
+| `security.podSecurityContext`      | Set the security context for the Ambassador pod                                 | `{ "runAsUser": "8888" }`        |
+| `security.containerSecurityContext`| Set the security context for the Ambassador container                           | `{ "allowPrivilegeEscalation": false }` |
+| `security.podSecurityPolicy`       | Create a PodSecurityPolicy to be used for the pod.                              | `[]`                              |
 | `restartPolicy`                    | Set the `restartPolicy` for pods                                                | ``                                |
 | `initContainers`                   | Containers used to initialize context for pods                                  | `[]`                              |
 | `sidecarContainers`                | Containers that share the pod context                                           | `[]`                              |
@@ -145,8 +148,8 @@ The following tables lists the configurable parameters of the Ambassador chart a
 | `authService.optional_configurations` | Config options for the `AuthService` CRD                                     | `""`                              |
 | `rateLimit.create`                 | Create the `RateLimit` CRD for Ambassador Edge Stack                            | `true`                            |
 | `autoscaling.enabled`              | If true, creates Horizontal Pod Autoscaler                                      | `false`                           |
-| `autoscaling.minReplica`           | If autoscaling enabled, this field sets minimum replica count                   | `2`                               |
-| `autoscaling.maxReplica`           | If autoscaling enabled, this field sets maximum replica count                   | `5`                               |
+| `autoscaling.minReplicas`           | If autoscaling enabled, this field sets minimum replica count                   | `2`                               |
+| `autoscaling.maxReplicas`           | If autoscaling enabled, this field sets maximum replica count                   | `5`                               |
 | `autoscaling.metrics`              | If autoscaling enabled, configure hpa metrics                                   |                                   |
 | `podDisruptionBudget`              | Pod disruption budget rules                                                     | `{}`                              |
 | `prometheusExporter.enabled`       | DEPRECATED: Prometheus exporter side-car enabled                                | `false`                           |
@@ -158,6 +161,18 @@ The following tables lists the configurable parameters of the Ambassador chart a
 | `metrics.serviceMonitor.interval`  | Interval at which metrics should be scraped                                     | `30s`                             |
 | `metrics.serviceMonitor.scrapeTimeout` | Timeout after which the scrape is ended                                     | `30s`                             |
 | `metrics.serviceMonitor.selector`  | Label Selector for Prometheus to find ServiceMonitors                           | `{ prometheus: kube-prometheus }` |
+| `servicePreview.enabled`                           | If true, install Service Preview components: traffic-manager & traffic-agent (`enableAES` needs to also be to `true`) | `false` |
+| `servicePreview.trafficManager.image.repository`   | Ambassador Traffic-manager image                                | Same value as `image.repository`  |
+| `servicePreview.trafficManager.image.tag`          | Ambassador Traffic-manager image tag                            | Same value as `image.tag`         |
+| `servicePreview.trafficManager.serviceAccountName` | Traffic-manager Service Account to be used                      | `traffic-manager`                 |
+| `servicePreview.trafficAgent.image.repository`     | Ambassador Traffic-agent image                                  | Same value as `image.repository`  |
+| `servicePreview.trafficAgent.image.tag`            | Ambassador Traffic-agent image tag                              | Same value as `image.tag`         |
+| `servicePreview.trafficAgent.injector.enabled`     | If true, install the ambassador-injector                        | `true`                            |
+| `servicePreview.trafficAgent.injector.crtPEM`      | TLS certificate for the Common Name of <ambassador-injector>.<namespace>.svc | Auto-generated, valid for 365 days |
+| `servicePreview.trafficAgent.injector.keyPEM`      | TLS private key for the Common Name of <ambassador-injector>.<namespace>.svc | Auto-generated, valid for 365 days |
+| `servicePreview.trafficAgent.port`                 | Traffic-agent listening port number when injected with ambassador-injector   | `9900`               |
+| `servicePreview.trafficAgent.serviceAccountName`   | Label Selector for Prometheus to find ServiceMonitors           | `traffic-agent`                   |
+| `servicePreview.trafficAgent.singleNamespace`      | If `true`, installs the traffic-agent ServiceAccount and Role in the current installation namespace; Otherwise uses a global ClusterRole applied to every ServiceAccount | `true` |
 
 **NOTE:** Make sure the configured `service.http.targetPort` and `service.https.targetPort` ports match your [Ambassador Module's](https://www.getambassador.io/reference/modules/#the-ambassador-module) `service_port` and `redirect_cleartext_from` configurations.
 
@@ -181,7 +196,59 @@ The `crds` flags (Helm 2 only) let you configure how a release manages crds.
 - `crds.enabled` Should be set on all releases using Ambassador CRDs
 - `crds.keep` Configures if the CRDs are deleted when the master release is 
   purged. This value is only checked for the master release and can be set to
-  any value on secondary releases. 
+  any value on secondary releases.
+
+### Security
+
+Ambassador takes security very seriously. For this reason, the YAML installation will default with a couple of basic security policies in place.
+
+The `security` field of the `values.yaml` file configures these default policies and replaces the `securityContext` field used earlier.
+
+The defaults will configure the pod to run as a non-root user and prohibit privilege escalation and outline a `PodSecurityPolicy` to ensure these conditions are met.
+
+
+
+```yaml
+security:
+  # Security Context for all containers in the pod.
+  # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#podsecuritycontext-v1-core
+  podSecurityContext:
+    runAsUser: 8888
+  # Security Context for the Ambassador container specifically
+  # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#securitycontext-v1-core
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+  # A basic PodSecurityPolicy to ensure Ambassador is running with appropriate security permissions
+  # https://kubernetes.io/docs/concepts/policy/pod-security-policy/
+  #
+  # A set of reasonable defaults is outlined below. This is not created by default as it should only
+  # be created by a one Release. If you want to use the PodSecurityPolicy in the chart, create it in
+  # the "master" Release and then leave it unset in all others. Set the `rbac.podSecurityPolicies` 
+  # in all non-"master" Releases.
+  podSecurityPolicy: []
+    # # Add AppArmor and Seccomp annotations
+    # # https://kubernetes.io/docs/concepts/policy/pod-security-policy/#apparmor
+    # annotations:
+    # spec:
+    #   seLinux:
+    #     rule: RunAsAny
+    #   supplementalGroups:
+    #     rule: 'MustRunAs'
+    #     ranges:
+    #       # Forbid adding the root group.
+    #       - min: 1
+    #         max: 65535
+    #   fsGroup:
+    #     rule: 'MustRunAs'
+    #     ranges:
+    #       # Forbid adding the root group.
+    #       - min: 1
+    #         max: 65535
+    #   privileged: false
+    #   allowPrivilegeEscalation: false
+    #   runAsUser:
+    #     rule: MustRunAsNonRoot
+```
 
 ### Annotations
 
