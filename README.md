@@ -96,7 +96,7 @@ The following tables lists the configurable parameters of the Ambassador chart a
 | `env`                              | Any additional environment variables for ambassador pods                        | `{}`                              |
 | `image.pullPolicy`                 | Ambassador image pull policy                                                    | `IfNotPresent`                    |
 | `image.repository`                 | Ambassador image                                                                | `docker.io/datawire/aes`          |
-| `image.tag`                        | Ambassador image tag                                                            | `1.5.2`                           |
+| `image.tag`                        | Ambassador image tag                                                            | `1.5.3`                           |
 | `imagePullSecrets`                 | Image pull secrets                                                              | `[]`                              |
 | `namespace.name`                   | Set the `AMBASSADOR_NAMESPACE` environment variable                             | `metadata.namespace`              |
 | `scope.singleNamespace`            | Set the `AMBASSADOR_SINGLE_NAMESPACE` environment variable and create namespaced RBAC if `rbac.enabled: true` | `false`|
@@ -130,6 +130,7 @@ The following tables lists the configurable parameters of the Ambassador chart a
 | `service.loadBalancerIP`           | IP address to assign (if cloud provider supports it)                            | `""`                              |
 | `service.loadBalancerSourceRanges` | Passed to cloud provider load balancer if created (e.g: AWS ELB)                | None                              |
 | `service.type`                     | Service type to be used                                                         | `LoadBalancer`                    |
+| `service.externalIPs`              | External IPs to route to the ambassador service                                 | `[]`                              |
 | `serviceAccount.create`            | If `true`, create a new service account                                         | `true`                            |
 | `serviceAccount.name`              | Service account to be used                                                      | `ambassador`                      |
 | `volumeMounts`                     | Volume mounts for the ambassador service                                        | `[]`                              |

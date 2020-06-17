@@ -4,7 +4,11 @@ This file documents all notable changes to Ambassador Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
 ## Next Release:
-- BugFix: Have .Values.service.ports actually just render the YAML as it was meant to do. Allows it to support any spec.ports configuration.
+- BugFix: Have `.Values.service.ports` actually just render the YAML as it was meant to do. Allows it to support any `spec.ports` configuration.
+
+## v6.4.5
+
+- Upgrade Ambassador to version 1.5.3: [CHANGELOG](https://github.com/datawire/ambassador/blob/master/CHANGELOG.md)
 
 ## v6.4.4
 
