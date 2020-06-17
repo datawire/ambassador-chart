@@ -3,6 +3,9 @@
 This file documents all notable changes to Ambassador Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## Next Release:
+- BugFix: Have .Values.service.ports actually just render the YAML as it was meant to do. Allows it to support any spec.ports configuration.
+
 ## v6.4.4
 
 - Feature flag for enabling or disabling the [`Project` registry](https://www.getambassador.io/docs/latest/topics/using/projects/)
