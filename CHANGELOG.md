@@ -5,6 +5,11 @@ numbering uses [semantic versioning](http://semver.org).
 
 ## Next Release
 
+## v6.5.11
+
+- Switch to gcr.io by default, rather than docker.io, since we're seeing issues
+  with at least some customers trying to use docker.io from EKS.
+
 ## v6.5.10
 
 - Update Ambassador to version 1.8.1: [CHANGELOG](https://github.com/datawire/ambassador/blob/master/CHANGELOG.md)
