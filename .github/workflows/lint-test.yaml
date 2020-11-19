@@ -20,7 +20,7 @@ jobs:
           config: ct.yaml
 
       - name: Create k3d cluster
-        uses: datawire/cluster-providers@master
+        uses: datawire/cluster-providers@acookin/use-gh-env-files
         with:
             provider: k3d
             command: create
