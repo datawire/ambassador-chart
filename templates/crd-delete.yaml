@@ -7,7 +7,7 @@ metadata:
   annotations:
     "helm.sh/hook": pre-delete
     "helm.sh/hook-weight": "3"
-    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
   labels:
     app.kubernetes.io/name: {{ include "ambassador.name" . }}
     app.kubernetes.io/part-of: {{ .Release.Name }}
