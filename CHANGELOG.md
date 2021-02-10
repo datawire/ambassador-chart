@@ -5,6 +5,27 @@ numbering uses [semantic versioning](http://semver.org).
 
 ## Next Release
 
+## v6.5.18
+
+- Update Ambassador to version v1.11.1: [CHANGELOG](https://github.com/datawire/ambassador/blob/master/CHANGELOG.md)
+
+## v6.5.17
+
+- Update Ambassador to version v1.11.0: [CHANGELOG](https://github.com/datawire/ambassador/blob/master/CHANGELOG.md)
+- Bugfix: Fix Mapping definition to correctly support labels in use.
+
+## v6.5.16
+
+- Bugfix: Ambassador CRD cleanup will now execute as expected.
+
+## v6.5.15
+
+- Bugfix: Ambassador RBAC now includes permissions for IngressClasses.
+
+## v6.5.14
+
+- Update for Ambassador v1.10.0
+
 ## v6.5.13
 
 - Update for Ambassador v1.9.1
