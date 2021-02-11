@@ -211,7 +211,7 @@ adminService:
   create: true
   type: ClusterIP
   port: 8877
-  snapshotPort: 9697
+  snapshotPort: 8005
   # NodePort used if type is NodePort
   # nodePort: 38877
   annotations:
