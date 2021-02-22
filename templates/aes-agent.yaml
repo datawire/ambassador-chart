@@ -104,6 +104,10 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command: [ "agent" ]
         env:
+        - name: CLOUD_CONNECT_TOKEN
+          value: {{ .Values.agent.cloudConnectToken }}
+        - name: RPC_CONNECTION_ADDRESS
+          value: {{ .Values.agent.rpcAddress }}
         - name: AES_SNAPSHOT_URL
           value: "http://{{ include "ambassador.fullname" . }}-admin.{{ include "ambassador.namespace" . }}:{{ .Values.adminService.snapshotPort }}/snapshot-external"
 {{- end }}
