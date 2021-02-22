@@ -99,7 +99,7 @@ spec:
     spec:
       serviceAccountName: {{ include "ambassador.fullname" . }}-agent
       containers:
-      - name: ambassador-agent
+      - name: agent
         image: "{{ .Values.agent.image.repository | default .Values.image.repository }}:{{ .Values.agent.image.tag | default .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command: [ "agent" ]
