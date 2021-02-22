@@ -482,8 +482,7 @@ agent:
   # this will be empty when it first gets applied, then the user will edit the agent to
   # make it start reporting
   cloudConnectToken: ""
-  # TODO(acookin): replace with app.getambassador.io when released
-  rpcAddress: https://beta-app.datawire.io/
+  rpcAddress: https://app.getambassador.io/
   image:
     # Leave blank to use image.repository and image.tag
     tag:
