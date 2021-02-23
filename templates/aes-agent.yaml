@@ -1,4 +1,4 @@
-{{- if .Values.agent.enabled }}
+{{- if ne .Values.agent.cloudConnectToken "" }}
 ---
 apiVersion: v1
 kind: ServiceAccount
