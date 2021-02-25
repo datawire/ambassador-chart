@@ -8,6 +8,10 @@ numbering uses [semantic versioning](http://semver.org).
 - Feature: Add support for the ambassador-agent, reporting to Service Catalog (https://app.getambassador.io)
 - Feature: All services are automatically instrumented with discovery annotations.
 
+## v6.5.19
+
+- Make all `livenessProbe` and `readinessProbe` configurations available to the values file
+
 ## v6.5.18
 
 - Update Ambassador to version v1.11.1: [CHANGELOG](https://github.com/datawire/ambassador/blob/master/CHANGELOG.md)
