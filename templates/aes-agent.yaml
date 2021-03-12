@@ -1,4 +1,5 @@
 {{- if and .Values.agent.enabled .Values.enableAES }}
+{{- if not (semver .Values.image.tag | (semver "1.12.0").Compare) }}
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -183,4 +184,5 @@ spec:
           value: {{ .Values.agent.rpcAddress }}
         - name: AES_SNAPSHOT_URL
           value: "http://{{ include "ambassador.fullname" . }}-admin.{{ include "ambassador.namespace" . }}:{{ .Values.adminService.snapshotPort }}/snapshot-external"
+{{- end }}
 {{- end }}
