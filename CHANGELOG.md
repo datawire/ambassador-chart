@@ -5,6 +5,9 @@ numbering uses [semantic versioning](http://semver.org).
 
 ## Next Release
 
+## v6.5.22
+
+- Bugfix: Disable the cloud agent by default. The agent will be enabled in 6.6.0.
 
 ## v6.5.21
 
