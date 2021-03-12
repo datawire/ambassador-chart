@@ -504,3 +504,4 @@ agent:
     # Leave blank to use image.repository and image.tag
     tag:
     repository:
+deploymentTool: ""
